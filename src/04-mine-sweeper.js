@@ -21,8 +21,51 @@
  *  [1, 1, 1]
  * ]
  */
-function minesweeper(/* matrix */) {
-  throw new Error('Not implemented');
+function minesweeper(matrix) {
+  const arr = [];
+
+  for (let i = 0; i < matrix.length; i++) {
+    const arrs = [];
+
+    for (let j = 0; j < matrix[i].length; j++) {
+      arrs.push(matrix[i][j]);
+    }
+    arr.push(arrs);
+  }
+  for (let i = 0; i < arr.length; i++) {
+    for (let j = 0; j < arr[i].length; j++) {
+      if (i - 1 < 0 && j - 1 < 0) {
+        arr[i][j] = Number(matrix[i][j + 1]) + Number(matrix[i + 1][j])
+        + Number(matrix[i + 1][j + 1]);
+      } else if (i - 1 < 0 && j + 1 >= matrix[i].length) {
+        arr[i][j] = Number(matrix[i][j - 1]) + Number(matrix[i + 1][j - 1])
+        + Number(matrix[i + 1][j]);
+      } else if (i + 1 >= arr.length && j - 1 < 0) {
+        arr[i][j] = Number(matrix[i - 1][j]) + Number(matrix[i - 1][j + 1])
+        + Number(matrix[i][j + 1]);
+      } else if (i + 1 >= arr.length && j + 1 >= matrix[i].length) {
+        arr[i][j] = Number(matrix[i - 1][j - 1]) + Number(matrix[i - 1][j])
+        + Number(matrix[i][j - 1]);
+      } else if (i - 1 < 0) {
+        arr[i][j] = Number(matrix[i][j - 1]) + Number(matrix[i][j + 1])
+        + Number(matrix[i + 1][j - 1]) + Number(matrix[i + 1][j]) + Number(matrix[i + 1][j + 1]);
+      } else if (j - 1 < 0) {
+        arr[i][j] = Number(matrix[i - 1][j]) + Number(matrix[i - 1][j + 1])
+        + Number(matrix[i][j + 1]) + Number(matrix[i + 1][j]) + Number(matrix[i + 1][j + 1]);
+      } else if (i + 1 >= arr.length) {
+        arr[i][j] = Number(matrix[i - 1][j - 1]) + Number(matrix[i - 1][j])
+        + Number(matrix[i - 1][j + 1]) + Number(matrix[i][j - 1]) + Number(matrix[i][j + 1]);
+      } else if (j + 1 >= matrix[i].length) {
+        arr[i][j] = Number(matrix[i - 1][j - 1]) + Number(matrix[i - 1][j])
+        + Number(matrix[i][j - 1]) + Number(matrix[i + 1][j - 1]) + Number(matrix[i + 1][j]);
+      } else {
+        arr[i][j] = Number(matrix[i - 1][j - 1]) + Number(matrix[i - 1][j])
+        + Number(matrix[i - 1][j + 1]) + Number(matrix[i][j - 1]) + Number(matrix[i][j + 1])
+        + Number(matrix[i + 1][j - 1]) + Number(matrix[i + 1][j]) + Number(matrix[i + 1][j + 1]);
+      }
+    }
+  }
+  return arr;
 }
 
 module.exports = minesweeper;
